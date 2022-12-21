@@ -1,0 +1,50 @@
+integer function psh()
+<
+create integer z;
+z = 56 *78;
+return z; 
+>;
+integer function fi(integer x, integer y)
+<
+create integer z;
+z= x*(x+y);
+return z; 
+>;
+string function fs (                string a, string b )
+<
+create string c1;
+create string c2;
+create string c3;
+c3 = concatstr(c1, c2);
+c = substr(a, 1,3)+ b;
+return c; 
+>;
+main
+<
+int i = 1;
+go i -> 100
+{
+	i = i + 1;
+};
+
+Инструкции в теле цикла повторяются 
+пока идентификатор не окажется равен указанному значению.
+
+create integer x;
+create integer y;
+create integer z;
+create string sa;
+create string sb;
+create string sc;
+x = 1;
+y = 5;
+sa = '1234567890';
+sb = '1234567890';
+z = fi(x,y);
+sc = fs(sa,sb);
+print '1234567890';
+print z;
+print sc;
+print strlen(sc);
+return 0;
+>;

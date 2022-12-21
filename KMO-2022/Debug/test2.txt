@@ -1,0 +1,41 @@
+$------------FUNCTIONS------------
+integer function puj(integer ok)
+<
+create integer z= 5* 6 - ok;
+return z;
+>;
+string function fs (     string a, string b )
+<
+create string c3;
+c3 = concatstr(a, b);
+return c3; 
+>;
+$------------MAIN------------
+main
+<
+create integer i = ~25;
+go i -> 10;
+<
+print i;
+i = i +1;
+>;
+create string sa = '123456';
+create string sb;
+create string sc;
+sb = '7890';
+sc = fs(sa,sb);
+print sc;
+create integer one = puj(4);
+create integer tre;
+tre = 27 / puj(4) + ( ~5);
+print one;
+print tre;
+create string sbb = 'hello';
+create string scc;
+scc = 'tu rbo';
+create string buf;
+buf = copystr(sbb, scc);
+print buf;
+print ~Qx75;
+print Bx011010;
+>;

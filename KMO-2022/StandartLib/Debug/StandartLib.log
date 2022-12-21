@@ -1,0 +1,5 @@
+﻿  pch.cpp
+  StandartLib.cpp
+  Создание кода...
+D:\BSTU\Kurs_2_1\KMO-2022\KMO-2022\StandartLib\StandartLib.cpp(23): warning C4172: возвращение адреса локальной или временной переменной : buf
+  StandartLib.vcxproj -> D:\BSTU\Kurs_2_1\KMO-2022\KMO-2022\Debug\StandartLib.lib

@@ -1,0 +1,5 @@
+﻿  KMO-2022.cpp
+  MFST.cpp
+D:\BSTU\Kurs_2_1\KMO-2022\KMO-2022\KMO-2022\MFST.cpp(253,68): warning C4267: =: преобразование из "size_t" в "short"; возможна потеря данных
+  Создание кода...
+  KMO-2022.vcxproj -> D:\BSTU\Kurs_2_1\KMO-2022\KMO-2022\Debug\KMO-2022.exe

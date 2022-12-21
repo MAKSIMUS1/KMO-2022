@@ -1,0 +1,512 @@
+.586
+.model flat, stdcall
+includelib StandartLib.lib
+includelib kernel32.lib
+includelib libucrt.lib
+
+ExitProcess PROTO : DWORD
+copystr PROTO : DWORD, : DWORD
+concatstr PROTO : DWORD, : DWORD
+outstr PROTO : DWORD
+outint PROTO : SDWORD 
+.stack 4096
+.const
+	overflow db 'ERROR: VARIABLE OVERFLOW', 0 
+	null_division db 'ERROR: DIVISION BY ZERO', 0
+	L1 SDWORD -225
+	L2 SDWORD 10
+	L3 SDWORD 1
+	L4 SDWORD 5
+	L5 SDWORD 6
+	L6 SDWORD 4
+	L7 SDWORD 0
+	L8 SDWORD 225
+	L9 BYTE "123456", 0
+	L10 BYTE "7890", 0
+	L11 BYTE "1234567890", 0
+	L12 SDWORD 257
+	L13 SDWORD 27
+	L14 BYTE " ----- test ----- ", 0
+	L15 SDWORD 50
+	L16 BYTE "hello", 0
+	L17 BYTE "turbo", 0
+	L18 SDWORD 61
+	L19 SDWORD -61
+	L20 SDWORD 26
+	L21 SDWORD -26
+	L22 SDWORD 2
+	L23 SDWORD 69648
+	L24 SDWORD 165
+	L25 SDWORD -165
+	L26 SDWORD 8
+	L27 SDWORD -100000
+.data
+	puj_i SDWORD 0
+	puj_z SDWORD 0
+	ma_in SDWORD 0
+	puj2_z SDWORD 0
+	fi_z SDWORD 0
+	fs_c3 BYTE 255 DUP(0)
+	main_i SDWORD 0
+	main_x SDWORD 0
+	main_y SDWORD 0
+	main_z SDWORD 0
+	main_sa BYTE 255 DUP(0)
+	main_sb BYTE 255 DUP(0)
+	main_sc BYTE 255 DUP(0)
+	main_one SDWORD 0
+	main_two SDWORD 0
+	main_tre SDWORD 0
+	main_bmw SDWORD 0
+	main_iy SDWORD 0
+	main_sbb BYTE 255 DUP(0)
+	main_scc BYTE 255 DUP(0)
+	main_buf BYTE 255 DUP(0)
+	main_sbb2 BYTE 255 DUP(0)
+	main_nagiv SDWORD 0
+.code
+
+puj_proc PROC, puj_ok : SDWORD
+	push L1
+	pop puj_i
+	CYCLE1: 
+	push puj_i
+	call outint
+
+	push puj_i
+	push L3
+	pop eax
+	pop ebx
+	add eax, ebx
+	jo EXIT_OVERFLOW
+	push eax
+	pop puj_i
+	cmp eax,L2 
+	jge NEXT1
+	loop CYCLE1
+	NEXT1:
+	push L4
+	push L5
+	pop eax
+	pop ebx
+	imul eax, ebx
+	jo EXIT_OVERFLOW
+	push eax
+	push L6
+	pop eax
+	neg eax
+	pop ebx
+	add eax, ebx
+	jo EXIT_OVERFLOW
+	push eax
+	pop puj_z
+	push puj_z
+
+	jmp EXIT
+	EXIT_DIV_ON_NULL:
+	push offset null_division
+	call outstr
+	push - 1
+	call ExitProcess
+
+	EXIT_OVERFLOW:
+	push offset overflow
+	call outstr
+	push - 2
+	call ExitProcess
+
+	EXIT:
+	pop eax
+	ret 4
+
+	push 0
+	call ExitProcess
+
+puj_proc ENDP
+
+ma_proc PROC
+	push L4
+	pop ma_in
+	push ma_in
+
+	jmp EXIT
+	EXIT_DIV_ON_NULL:
+	push offset null_division
+	call outstr
+	push - 1
+	call ExitProcess
+
+	EXIT_OVERFLOW:
+	push offset overflow
+	call outstr
+	push - 2
+	call ExitProcess
+
+	EXIT:
+	pop eax
+	ret 0
+
+	push 0
+	call ExitProcess
+
+ma_proc ENDP
+
+puj2_proc PROC
+	push L4
+	push L5
+	pop eax
+	pop ebx
+	imul eax, ebx
+	jo EXIT_OVERFLOW
+	push eax
+	push L5
+	pop ebx
+	pop eax
+	test ebx,ebx
+	jz EXIT_DIV_ON_NULL
+	cdq
+	idiv ebx
+	push edx
+	pop puj2_z
+	push puj2_z
+
+	jmp EXIT
+	EXIT_DIV_ON_NULL:
+	push offset null_division
+	call outstr
+	push - 1
+	call ExitProcess
+
+	EXIT_OVERFLOW:
+	push offset overflow
+	call outstr
+	push - 2
+	call ExitProcess
+
+	EXIT:
+	pop eax
+	ret 0
+
+	push 0
+	call ExitProcess
+
+puj2_proc ENDP
+
+fi_proc PROC, fi_x : SDWORD, fi_y : SDWORD
+	push fi_x
+	push fi_x
+	push fi_y
+	pop eax
+	pop ebx
+	add eax, ebx
+	jo EXIT_OVERFLOW
+	push eax
+	pop eax
+	pop ebx
+	imul eax, ebx
+	jo EXIT_OVERFLOW
+	push eax
+	pop fi_z
+	push fi_z
+
+	jmp EXIT
+	EXIT_DIV_ON_NULL:
+	push offset null_division
+	call outstr
+	push - 1
+	call ExitProcess
+
+	EXIT_OVERFLOW:
+	push offset overflow
+	call outstr
+	push - 2
+	call ExitProcess
+
+	EXIT:
+	pop eax
+	ret 8
+
+	push 0
+	call ExitProcess
+
+fi_proc ENDP
+
+fs_proc PROC, fs_a : DWORD, fs_b : DWORD
+	push fs_a
+	push fs_b
+	call concatstr
+	push eax
+	push offset fs_c3
+	call copystr
+
+	push offset fs_c3
+	call outstr
+
+	push offset fs_c3
+
+	jmp EXIT
+	EXIT_DIV_ON_NULL:
+	push offset null_division
+	call outstr
+	push - 1
+	call ExitProcess
+
+	EXIT_OVERFLOW:
+	push offset overflow
+	call outstr
+	push - 2
+	call ExitProcess
+
+	EXIT:
+	pop eax
+	ret 8
+
+	push 0
+	call ExitProcess
+
+fs_proc ENDP
+
+main PROC
+	push L1
+	pop main_i
+	CYCLE2: 
+	push main_i
+	call outint
+
+	push main_i
+	push L3
+	pop eax
+	pop ebx
+	add eax, ebx
+	jo EXIT_OVERFLOW
+	push eax
+	pop main_i
+	cmp eax,L2 
+	jge NEXT2
+	loop CYCLE2
+	NEXT2:
+	push L7
+	push L8
+	pop eax
+	neg eax
+	pop ebx
+	add eax, ebx
+	jo EXIT_OVERFLOW
+	push eax
+	pop main_x
+	push main_x
+	call outint
+
+	push L3
+	pop main_x
+	push L4
+	pop main_y
+	push offset L9
+	push offset main_sa
+	call copystr
+
+	push offset L10
+	push offset main_sb
+	call copystr
+
+	push main_y
+	push main_x
+	call fi_proc
+	push eax
+	pop main_z
+	push offset main_sb
+	push offset main_sa
+	call fs_proc
+	push eax
+	push offset main_sc
+	call copystr
+
+	push offset L11
+	call outstr
+
+	push main_z
+	call outint
+
+	push offset main_sc
+	call outstr
+
+	push L6
+	call puj_proc
+	push eax
+	pop main_one
+	push L12
+	push L4
+	pop eax
+	pop ebx
+	add eax, ebx
+	jo EXIT_OVERFLOW
+	push eax
+	pop main_two
+	push L13
+	push L6
+	call puj_proc
+	push eax
+	pop ebx
+	pop eax
+	test ebx,ebx
+	jz EXIT_DIV_ON_NULL
+	cdq
+	idiv ebx
+	push eax
+	call puj2_proc
+	push eax
+	push L4
+	pop eax
+	neg eax
+	pop ebx
+	add eax, ebx
+	jo EXIT_OVERFLOW
+	push eax
+	pop eax
+	pop ebx
+	add eax, ebx
+	jo EXIT_OVERFLOW
+	push eax
+	pop main_tre
+	push offset L14
+	call outstr
+
+	push main_one
+	call outint
+
+	push main_two
+	call outint
+
+	push main_tre
+	call outint
+
+	push L7
+	push L15
+	pop eax
+	neg eax
+	pop ebx
+	add eax, ebx
+	jo EXIT_OVERFLOW
+	push eax
+	pop main_bmw
+	push L3
+	pop main_iy
+	CYCLE3: 
+	push main_bmw
+	call outint
+
+	push main_bmw
+	push L3
+	pop eax
+	pop ebx
+	add eax, ebx
+	jo EXIT_OVERFLOW
+	push eax
+	pop main_bmw
+	cmp eax,L2 
+	jge NEXT3
+	loop CYCLE3
+	NEXT3:
+	push offset L16
+	push offset main_sbb
+	call copystr
+
+	push offset L17
+	push offset main_scc
+	call copystr
+
+	push offset main_scc
+	push offset main_sbb
+	call copystr
+	push eax
+	push offset main_buf
+	call copystr
+
+	push offset main_buf
+	call outstr
+
+	push offset L16
+	push offset main_sbb2
+	call copystr
+
+	push L18
+	call outint
+
+	push L18
+	call outint
+
+	push L19
+	call outint
+
+	push L20
+	call outint
+
+	push L20
+	call outint
+
+	push L21
+	call outint
+
+	push L22
+	call outint
+
+	push L23
+	call outint
+
+	push L24
+	call outint
+
+	push L25
+	call outint
+
+	push L26
+	push L27
+	pop eax
+	neg eax
+	pop ebx
+	add eax, ebx
+	jo EXIT_OVERFLOW
+	push eax
+	call outint
+
+	call puj2_proc
+	push eax
+	call outint
+
+	push L22
+	push L22
+	pop eax
+	pop ebx
+	add eax, ebx
+	jo EXIT_OVERFLOW
+	push eax
+	push L22
+	pop eax
+	pop ebx
+	imul eax, ebx
+	jo EXIT_OVERFLOW
+	push eax
+	pop main_nagiv
+	push main_nagiv
+	call outint
+
+
+	jmp EXIT
+	EXIT_DIV_ON_NULL:
+	push offset null_division
+	call outstr
+	push - 1
+	call ExitProcess
+
+	EXIT_OVERFLOW:
+	push offset overflow
+	call outstr
+	push - 2
+	call ExitProcess
+
+	EXIT:
+	push 0
+	call ExitProcess
+
+main ENDP
+end main

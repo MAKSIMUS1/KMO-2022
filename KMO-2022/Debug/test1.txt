@@ -1,0 +1,118 @@
+
+$------------FUNCTION------------
+integer function puj(integer ok)
+<
+create integer i = ~225;
+go i -> 10;
+<
+print i;
+i = i +1;
+>;
+create integer z;
+z = 5* 6 - 4;
+return z;
+>;
+integer function ma()
+<
+create integer in = 5;
+return in;
+>;
+$------------FUNCTION------------
+integer function puj2()
+<
+create integer z;
+z = 5* 6 % 6;
+return z;
+>;
+
+$------------FUNCTION------------
+integer function fi(integer x, integer y)
+<
+create integer z;
+z= x*(x+y);
+return z; 
+>;
+
+$------------FUNCTION------------
+string function fs (                string a, string b )
+<
+create string c3;
+c3 = concatstr(a, b);
+print c3;
+return c3; 
+>;
+$------------MAIN------------
+main
+<
+create integer i = ~225;
+go i -> 10;
+<
+print i;
+i = i +1;
+>;
+
+create integer x = 0 - 225;
+print x;
+create integer y;
+create integer z;
+create string sa;
+create string sb;
+create string sc;
+x = 1;
+y = 5; 
+$ x = psh() + 'test'; need fix <sem>304
+$ y = 9999999999999999999999; need fix <sem>305
+$ sb = sb - sc; ok <sem>306
+$ need fix 308
+sa = '123456';
+sb = '7890';
+z = fi(x,y);
+sc = fs(sa,sb);
+print '1234567890';
+print z;
+print sc;
+$ print strlen(sc);
+
+create integer one = puj(4);
+create integer two;
+create integer tre;
+two = ((257+5));
+tre = 27 / puj(4) + (puj2() - 5);
+$ print 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+print ' ----- test ----- ';
+print one;
+print two;
+print tre;
+create integer bmw =  0 - 50;
+create integer iy = 1;
+go bmw -> 10;
+<
+ print bmw;
+ bmw = bmw +1;
+>;
+create string sbb = 'hello';
+create string scc;
+scc = 'turbo';
+
+create string buf;
+buf = copystr(sbb, scc);
+print buf;
+create string sbb2 = 'hello';
+$ 61
+print Qx75;
+print Qx075;
+print ~Qx75;
+$ 21
+print Bx011010;
+print Bx11010;
+print ~Bx11010;
+print Hx2;
+print Hx11010;
+print HxA5;
+print ~HxA5;
+print (8 - ~100000);
+print puj2();
+create integer nagiv;
+nagiv= (2+2)*2;
+print nagiv;
+>;
